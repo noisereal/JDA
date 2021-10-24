@@ -16,10 +16,7 @@
 
 package net.dv8tion.jda.internal.handle;
 
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
-import net.dv8tion.jda.api.events.interaction.SelectionMenuEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.*;
 import net.dv8tion.jda.api.interactions.InteractionType;
 import net.dv8tion.jda.api.interactions.components.Component;
 import net.dv8tion.jda.api.utils.data.DataObject;
@@ -61,6 +58,9 @@ public class InteractionCreateHandler extends SocketHandler
             case COMPONENT: // buttons/components
                 handleAction(content);
                 break;
+            case AUTOCOMPLETE: // autocomplete
+                handleAutoComplete(content);
+                break;
             default:
                 api.handleEvent(
                     new GenericInteractionCreateEvent(api, responseNumber,
@@ -93,4 +93,10 @@ public class InteractionCreateHandler extends SocketHandler
             break;
         }
     }
+
+    private void handleAutoComplete(DataObject content)
+    {
+        api.handleEvent(new ApplicationCommandAutocompleteEvent(api, responseNumber, new CommandInteractionImpl(api, content)));
+    }
+
 }

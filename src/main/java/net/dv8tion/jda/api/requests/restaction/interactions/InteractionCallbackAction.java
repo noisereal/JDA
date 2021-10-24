@@ -38,6 +38,8 @@ public interface InteractionCallbackAction extends RestAction<InteractionHook>
         DEFERRED_MESSAGE_UPDATE(6),
         /** Update the message for a component interaction */
         MESSAGE_UPDATE(7),
+        /** Send choices */
+        AUTOCOMPLETE_RESPONSE(8),
         ;
         private final int raw;
 

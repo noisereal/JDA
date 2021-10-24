@@ -71,7 +71,7 @@ public class OptionData implements SerializableData
 
     private final OptionType type;
     private String name, description;
-    private boolean isRequired;
+    private boolean isRequired, autoComplete;
     private final EnumSet<ChannelType> channelTypes = EnumSet.noneOf(ChannelType.class);
     private Map<String, Object> choices;
 
@@ -538,13 +538,21 @@ public class OptionData implements SerializableData
     }
 
     @Nonnull
+    public OptionData setAutoComplete(boolean autoComplete)
+    {
+        this.autoComplete = autoComplete;
+        return this;
+    }
+
+    @Nonnull
     @Override
     public DataObject toData()
     {
         DataObject json = DataObject.empty()
                 .put("type", type.getKey())
                 .put("name", name)
-                .put("description", description);
+                .put("description", description)
+                .put("autocomplete", autoComplete);
         if (type != OptionType.SUB_COMMAND && type != OptionType.SUB_COMMAND_GROUP)
             json.put("required", isRequired);
         if (choices != null && !choices.isEmpty())

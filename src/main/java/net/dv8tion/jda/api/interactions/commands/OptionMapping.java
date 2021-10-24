@@ -38,6 +38,7 @@ public class OptionMapping
     private final DataObject data;
     private final OptionType type;
     private final String name;
+    private final boolean focused;
     private final TLongObjectMap<Object> resolved;
 
     public OptionMapping(DataObject data, TLongObjectMap<Object> resolved)
@@ -45,7 +46,13 @@ public class OptionMapping
         this.data = data;
         this.type = OptionType.fromKey(data.getInt("type", -1));
         this.name = data.getString("name");
+        this.focused = data.getBoolean("focused", false);
         this.resolved = resolved;
+    }
+
+    public boolean isFocused()
+    {
+        return focused;
     }
 
     /**
