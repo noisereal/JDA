@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.RestAction;
+import net.dv8tion.jda.api.requests.restaction.interactions.InteractionCallbackAction;
 import net.dv8tion.jda.api.utils.data.DataArray;
 import net.dv8tion.jda.api.utils.data.DataObject;
 import net.dv8tion.jda.internal.interactions.CommandInteractionImpl;
@@ -37,7 +38,7 @@ public class ApplicationCommandAutocompleteEvent extends GenericInteractionCreat
         choices.forEach(choice -> choicesArray.add(DataObject.empty().put("name", choice.getName()).put("value", choice.getAsString())));
         DataObject data = DataObject.empty().put("choices", choicesArray);
         DataObject requestBody = DataObject.empty()
-                .put("type", 8)
+                .put("type", InteractionCallbackAction.ResponseType.AUTOCOMPLETE_RESPONSE.getRaw())
                 .put("data", data);
         return new
                 RestActionImpl<>(api, Route.Interactions.CALLBACK.compile(interaction.getId(), interaction.getToken()), requestBody, ((response, voidRequest) -> null));
