@@ -28,6 +28,7 @@ import net.dv8tion.jda.internal.requests.restaction.interactions.ReplyActionImpl
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Locale;
 
 public class InteractionImpl implements Interaction
 {
@@ -35,6 +36,8 @@ public class InteractionImpl implements Interaction
     protected final long id;
     protected final int type;
     protected final String token;
+    protected final Locale userLocale;
+    protected final Locale guildLocale;
     protected final Guild guild;
     protected final Member member;
     protected final User user;
@@ -46,6 +49,8 @@ public class InteractionImpl implements Interaction
         this.api = jda;
         this.id = data.getUnsignedLong("id");
         this.token = data.getString("token");
+        this.userLocale = data.isNull("locale") ? null : Locale.forLanguageTag(data.getString("locale"));
+        this.guildLocale = data.isNull("guild_locale") ? null : Locale.forLanguageTag(data.getString("guild_locale"));
         this.type = data.getInt("type");
         this.guild = jda.getGuildById(data.getUnsignedLong("guild_id", 0L));
         this.hook = new InteractionHookImpl(this, jda);
@@ -74,7 +79,7 @@ public class InteractionImpl implements Interaction
         }
     }
 
-    public InteractionImpl(long id, int type, String token, Guild guild, Member member, User user, AbstractChannel channel)
+    public InteractionImpl(long id, int type, String token, Guild guild, Member member, User user, AbstractChannel channel, Locale userLocale, Locale guildLocale)
     {
         this.id = id;
         this.type = type;
@@ -82,6 +87,8 @@ public class InteractionImpl implements Interaction
         this.guild = guild;
         this.member = member;
         this.user = user;
+        this.userLocale = userLocale;
+        this.guildLocale = guildLocale;
         this.channel = channel;
         this.api = (JDAImpl) user.getJDA();
         this.hook = new InteractionHookImpl(this, api);
@@ -104,6 +111,20 @@ public class InteractionImpl implements Interaction
     public String getToken()
     {
         return token;
+    }
+
+    @Nullable
+    @Override
+    public Locale getUserLocale()
+    {
+        return userLocale;
+    }
+
+    @Nullable
+    @Override
+    public Locale getGuildLocale()
+    {
+        return guildLocale;
     }
 
     @Nullable

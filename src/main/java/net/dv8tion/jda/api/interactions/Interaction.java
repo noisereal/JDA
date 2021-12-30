@@ -27,6 +27,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * Abstract representation for any kind of Discord interaction.
@@ -70,6 +71,13 @@ public interface Interaction extends ISnowflake
      */
     @Nonnull
     String getToken();
+
+    @Nullable
+    Locale getUserLocale();
+
+    @Nullable
+    Locale getGuildLocale();
+
 
     /**
      * The {@link Guild} this interaction happened in.
