@@ -28,6 +28,7 @@ import net.dv8tion.jda.api.entities.IPermissionContainer;
 import net.dv8tion.jda.api.events.*;
 import net.dv8tion.jda.api.exceptions.ParsingException;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.metrics.PrometheusMetrics;
 import net.dv8tion.jda.api.requests.CloseCode;
 import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.MiscUtil;
@@ -876,6 +877,7 @@ public class WebSocketClient extends WebSocketAdapter implements WebSocketListen
             default:
                 LOG.debug("Got unknown op-code: {} with content: {}", opCode, content);
         }
+        PrometheusMetrics.EVENTS_TOTAL.labels(String.valueOf(shardInfo.getShardId())).inc();
     }
 
     protected void onDispatch(DataObject raw)

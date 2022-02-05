@@ -108,6 +108,11 @@ public class SessionConfig
         return flags.contains(ConfigFlag.RAW_EVENTS);
     }
 
+    public boolean isPrometheusEnabled()
+    {
+        return flags.contains(ConfigFlag.PROMETHEUS_METRICS);
+    }
+
     public boolean isRelativeRateLimit()
     {
         return flags.contains(ConfigFlag.USE_RELATIVE_RATELIMIT);

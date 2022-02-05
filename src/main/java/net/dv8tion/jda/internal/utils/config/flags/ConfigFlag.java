@@ -26,7 +26,8 @@ public enum ConfigFlag
     BULK_DELETE_SPLIT(true),
     SHUTDOWN_HOOK(true),
     MDC_CONTEXT(true),
-    AUTO_RECONNECT(true);
+    AUTO_RECONNECT(true),
+    PROMETHEUS_METRICS;
 
     private final boolean isDefault;
 

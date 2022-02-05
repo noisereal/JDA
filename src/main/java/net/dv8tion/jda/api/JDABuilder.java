@@ -778,6 +778,12 @@ public class JDABuilder
         return setFlag(ConfigFlag.RETRY_TIMEOUT, retryOnTimeout);
     }
 
+    @Nonnull
+    public JDABuilder enablePrometheusMetrics(boolean enable)
+    {
+        return setFlag(ConfigFlag.PROMETHEUS_METRICS, enable);
+    }
+
     /**
      * Sets the token that will be used by the {@link net.dv8tion.jda.api.JDA} instance to log in when
      * {@link net.dv8tion.jda.api.JDABuilder#build() build()} is called.

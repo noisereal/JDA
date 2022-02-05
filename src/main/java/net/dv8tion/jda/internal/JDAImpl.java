@@ -18,6 +18,8 @@ package net.dv8tion.jda.internal;
 
 import com.neovisionaries.ws.client.WebSocketFactory;
 import gnu.trove.set.TLongSet;
+import io.prometheus.client.exporter.HTTPServer;
+import io.prometheus.client.hotspot.DefaultExports;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.GatewayEncoding;
 import net.dv8tion.jda.api.JDA;
@@ -83,6 +85,7 @@ import org.slf4j.MDC;
 
 import javax.annotation.Nonnull;
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -314,6 +317,19 @@ public class JDAImpl implements JDA
 
         if (shutdownHook != null)
             Runtime.getRuntime().addShutdownHook(shutdownHook);
+
+        if (sessionConfig.isPrometheusEnabled())
+        {
+            DefaultExports.initialize(); // Returns JVM stats
+            try
+            {
+                new HTTPServer(5123); // TODO: Port should be configurable
+            }
+            catch(IOException exception)
+            {
+                LOG.error("An error occurred while starting prometheus web-server!", exception);
+            }
+        }
 
         return shardInfo == null ? -1 : shardInfo.getShardTotal();
     }
