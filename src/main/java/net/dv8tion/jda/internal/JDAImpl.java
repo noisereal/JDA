@@ -40,6 +40,7 @@ import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.managers.Presence;
+import net.dv8tion.jda.api.metrics.PrometheusMetrics;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.Request;
 import net.dv8tion.jda.api.requests.Response;
@@ -324,6 +325,8 @@ public class JDAImpl implements JDA
             try
             {
                 new HTTPServer(5123); // TODO: Port should be configurable
+                LOG.info("Prometheus Web-Server loaded!");
+                PrometheusMetrics.EVENTS_TOTAL.inc();
             }
             catch(IOException exception)
             {

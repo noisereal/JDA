@@ -121,9 +121,9 @@ dependencies {
     //General Utility
     implementation("net.sf.trove4j:trove4j:3.0.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.1")
-    implementation("io.prometheus:simpleclient:0.14.1")
-    implementation("io.prometheus:simpleclient_hotspot:0.14.1")
-    implementation("io.prometheus:simpleclient_httpserver:0.14.1")
+    api("io.prometheus:simpleclient:0.14.1")
+    api("io.prometheus:simpleclient_hotspot:0.14.1")
+    api("io.prometheus:simpleclient_httpserver:0.14.1")
 
     //Sets the dependencies for the examples
     configurations["examplesImplementation"].withDependencies {
