@@ -123,6 +123,8 @@ dependencies {
     //General Utility
     implementation("net.sf.trove4j:trove4j:3.0.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2")
+
 
     //Sets the dependencies for the examples
     configurations["examplesImplementation"].withDependencies {
