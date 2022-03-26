@@ -383,8 +383,13 @@ public class MessageActionImpl extends RestActionImpl<Message> implements Messag
     public MessageActionImpl setActionRows(@Nonnull ActionRow... rows)
     {
         Checks.noneNull(rows, "ActionRows");
+
+        if (Arrays.stream(rows).anyMatch(actionRow -> !actionRow.isMessageCompatible()))
+            throw new IllegalArgumentException("Provided ActionRow is not compatible with Messages!");
+
         if (components == null)
             components = new ArrayList<>();
+
         Checks.check(rows.length <= 5, "Can only have 5 action rows per message!");
         Checks.checkDuplicateIds(Arrays.stream(rows));
         this.components.clear();
