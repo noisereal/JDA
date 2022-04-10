@@ -10,10 +10,10 @@ name: build
 on:
   push:
     branches:
-      - master
+      - feature/modals
   pull_request:
     branches:
-      - master
+      - feature/modals
   release:
     types: released
 
